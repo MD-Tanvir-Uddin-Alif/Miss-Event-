@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import CustomUser
+from .models import CustomUser
 from django.contrib.auth.password_validation import validate_password
 
 class CustomUserRegistrationSerializer(serializers.ModelSerializer):
@@ -12,8 +12,8 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'first_name':{'required':True},
             'last_name':{'required':True},
-            'username':{'requied':True},
-            'email':{'required',True},
+            'username':{'required':True},
+            'email':{'required':True},
             'password':{'write_only':True},
         }
         
@@ -27,7 +27,7 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password1')
-        password = validated_data.pop('password1')
+        password = validated_data.get('password')
         
         user = CustomUser.objects.create_user(**validated_data)
         user.set_password(password)
