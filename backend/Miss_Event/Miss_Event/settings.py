@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'Account',
 ]
 
+AUTH_USER_MODEL = 'Account.CustomUser'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
