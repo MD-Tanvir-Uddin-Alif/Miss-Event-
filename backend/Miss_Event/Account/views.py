@@ -2,6 +2,7 @@ import uuid
 from django.shortcuts import render
 from .models import CustomUser
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -26,7 +27,7 @@ class CustomUserRegistrationView(CreateAPIView):
         user.is_active = False
         user.save()
         
-        verify_link = f"http://your-domain.com/api/user/verify-email/{token}/"
+        verify_link = f"http://127.0.0.1:8000/api/user/verify-email/{token}/"
         
         send_mail(
             subject="Verify your email",
@@ -41,3 +42,13 @@ class CustomUserRegistrationView(CreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
+class VerifyView(APIView):
+    def get(self, request, token):
+        try:
+            user = CustomUser.objects.get(email_verification_token=token)
+            user.is_active = True
+            user.email_verification_token = None
+            user.save()
+            return Response({"message": "Email verified successfully. You can now log in."})
+        except:
+            return Response({"error": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
