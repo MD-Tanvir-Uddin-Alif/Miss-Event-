@@ -1,7 +1,12 @@
+import uuid
 from django.shortcuts import render
 from .models import CustomUser
+from rest_framework import status
 from rest_framework.generics import CreateAPIView
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from django.core.mail import send_mail
+from django.conf import settings
 from .serializers import CustomUserRegistrationSerializer
 # Create your views here.
 
@@ -11,3 +16,28 @@ class CustomUserRegistrationView(CreateAPIView):
     serializer_class = CustomUserRegistrationSerializer
     permission_classes = [AllowAny]
     
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        token = str(uuid.uuid4())
+        user.email_verification_token = token
+        user.is_active = False
+        user.save()
+        
+        verify_link = f"http://your-domain.com/api/user/verify-email/{token}/"
+        
+        send_mail(
+            subject="Verify your email",
+            message=f"Hello {user.username}, click here to verify: {verify_link}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            fail_silently=False,
+        )
+        
+        return Response(
+            {"message": "Registration successful. Please check your email to verify your account."},
+            status=status.HTTP_201_CREATED
+        )
+
