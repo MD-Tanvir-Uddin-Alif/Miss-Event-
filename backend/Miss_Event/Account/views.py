@@ -1,6 +1,7 @@
 import uuid
 from django.shortcuts import render
 from .models import CustomUser
+from .utils import password_reset_token
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
@@ -8,6 +9,7 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
 from django.conf import settings
 from .serializers import CustomUserRegistrationSerializer, UserProfileSerializer
 # Create your views here.
@@ -75,3 +77,54 @@ class UpdateProfileView(RetrieveUpdateAPIView):
     
     def get_object(self):
         return self.request.user
+
+
+User = get_user_model()
+
+
+class PasswordResetRequestView(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request):
+        email = request.data.get("email")
+        
+        if not email:
+            return Response({"detail": "Email is required."}, status=400)
+        
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({"detail": "User with this email does not exist."}, status=404)
+
+        token = password_reset_token.make_token(user)
+        uid = user.id
+        
+        reset_link = f"http://127.0.0.1:8000/api/user/reset-password/confirm/{uid}/{token}/"
+        send_mail(
+            subject="Password Reset Request",
+            message=f"Hi {user.username}, click the link below to reset your password:\n\n{reset_link}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email]
+        )
+        return Response({"detail": "Password reset email has been sent."}, status=200)
+
+
+class PasswordResetConfirmView(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request, uid, token):
+        new_password = request.data.get("password")
+        
+        if not new_password:
+            return Response({"detail": "Password is required."}, status=400)
+        
+        try:
+            user = User.objects.get(id=uid)
+        except User.DoesNotExist:
+            return Response({"detail": "Invalid user."}, status=404)
+        
+        if not password_reset_token.check_token(user , token):
+            return Response({"detail": "Invalid or expired token."}, status=400)
+        
+        user.set_password(new_password)
+        user.save()
+        
+        return Response({"detail": "Password has been reset successfully."}, status=200)
