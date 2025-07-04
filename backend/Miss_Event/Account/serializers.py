@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth.password_validation import validate_password
 
+
 class CustomUserRegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True, required=True)
     
@@ -40,3 +41,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id','first_name', 'last_name', 'username', 'email', 'phone', 'image']
         read_only_fields = ['id', 'username']
+
+
+class ChangePasswordSeriliazer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    
+    def validate_new_password(self, value):
+        user = self.context["request"].user
+        validate_password(value, user)
+        return value
+        
