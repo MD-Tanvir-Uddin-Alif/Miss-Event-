@@ -5,7 +5,7 @@ from .utils import password_reset_token
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.core.mail import send_mail
@@ -153,3 +153,12 @@ class ChangePasswordView(UpdateAPIView):
         user.save()
         
         return Response({"detail": "Password changed successfully."}, status=status.HTTP_200_OK)
+
+
+class UserProfileView(RetrieveAPIView):
+    queryset = CustomUser
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        return self.request.user
