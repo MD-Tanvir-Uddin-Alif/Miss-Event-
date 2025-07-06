@@ -12,7 +12,7 @@ class OrganizationRegistrationSerializer(serializers.ModelSerializer):
     password1  = serializers.CharField(write_only=True, required=True)
     class Meta:
         model = OrganizationModel
-        fields = ['id', 'organization', 'address1', 'address2', 'phone', 'link', 'email', 'descriptoin', 'logo', 'username', 'password', 'password1']
+        fields = ['id', 'organization', 'address1', 'address2', 'phone', 'link', 'email', 'description', 'logo', 'username', 'password', 'password1']
         
         extra_kwargs = {
             'username':{'required':True},
@@ -20,7 +20,7 @@ class OrganizationRegistrationSerializer(serializers.ModelSerializer):
             'phone':{'required':True},
             'password':{'required':True},
             'organization':{'required':True},
-            'address1':{'requored':True},
+            'address1':{'required':True},
         }
     
     def validate(self, attrs):
