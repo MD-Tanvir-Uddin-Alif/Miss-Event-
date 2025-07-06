@@ -46,6 +46,7 @@ class CustomUserRegistrationView(CreateAPIView):
         )
 
 class VerifyView(APIView):
+    permission_classes = [AllowAny]
     def get(self, request, token):
         try:
             user = CustomUser.objects.get(email_verification_token=token)

@@ -41,7 +41,8 @@ class OrganizationRegistrationSerializer(serializers.ModelSerializer):
             username=username,
             email=email,
             password=password,
-            is_organizer=True
+            is_organizer=True,
+            is_active=False
         )
         
         organization = OrganizationModel.objects.create(
