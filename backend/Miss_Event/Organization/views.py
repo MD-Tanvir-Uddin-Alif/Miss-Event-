@@ -46,3 +46,4 @@ class OrganizationRegisterView(CreateAPIView):
             },
             status=status.HTTP_201_CREATED,
         )
+

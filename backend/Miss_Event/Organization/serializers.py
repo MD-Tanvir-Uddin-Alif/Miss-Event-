@@ -51,3 +51,10 @@ class OrganizationRegistrationSerializer(serializers.ModelSerializer):
         )
         
         return organization
+
+
+class OrganizationDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrganizationModel
+        fields = ['id', 'organization', 'address1', 'address2', 'phone', 'link', 'email', 'description', 'logo',]
+        read_only_fields = ['id']
