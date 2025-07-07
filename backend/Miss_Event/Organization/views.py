@@ -53,3 +53,6 @@ class OrganizerDetailsView(RetrieveAPIView):
     queryset = OrganizationModel.objects.all()
     serializer_class = OrganizationDetailsSerializer
     permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        return self.request.user.organizationmodel
