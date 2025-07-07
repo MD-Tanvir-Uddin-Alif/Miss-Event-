@@ -5,7 +5,7 @@ from rest_framework import status
 from django.shortcuts import render
 from .serializers import OrganizationRegistrationSerializer, OrganizationDetailsSerializer
 from .models import OrganizationModel
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView,RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.core.mail import send_mail
@@ -51,6 +51,15 @@ class OrganizationRegisterView(CreateAPIView):
 
 class OrganizerDetailsView(RetrieveAPIView):
     queryset = OrganizationModel.objects.all()
+    serializer_class = OrganizationDetailsSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        return self.request.user.organizationmodel
+
+
+class OrganizationDetailUpdateView(RetrieveUpdateAPIView):
+    queryset = OrganizationModel
     serializer_class = OrganizationDetailsSerializer
     permission_classes = [IsAuthenticated]
     
