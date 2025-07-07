@@ -3,10 +3,10 @@ from django.conf import settings
 from django.db import transaction
 from rest_framework import status
 from django.shortcuts import render
-from .serializers import OrganizationRegistrationSerializer
+from .serializers import OrganizationRegistrationSerializer, OrganizationDetailsSerializer
 from .models import OrganizationModel
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.core.mail import send_mail
 from Account.models import CustomUser
@@ -47,3 +47,9 @@ class OrganizationRegisterView(CreateAPIView):
             status=status.HTTP_201_CREATED,
         )
 
+
+
+class OrganizerDetailsView(RetrieveAPIView):
+    queryset = OrganizationModel.objects.all()
+    serializer_class = OrganizationDetailsSerializer
+    permission_classes = [IsAuthenticated]
