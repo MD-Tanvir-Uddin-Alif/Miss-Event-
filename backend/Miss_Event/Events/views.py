@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.generics import (
-    CreateAPIView
+    CreateAPIView, RetrieveUpdateDestroyAPIView
 )
 
 from .serializers import EventSerializer
@@ -16,3 +16,10 @@ class OrganizerEventCreateView(CreateAPIView):
     
     def perform_create(self, serializer):
         serializer.save(organization=self.request.user.organizationmodel)
+
+
+
+class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = EventModel.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = [IsOrganizerAndOwner]
