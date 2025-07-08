@@ -12,7 +12,7 @@ class EventModel(models.Model):
     end_time = models.DateTimeField()
     location = models.CharField(max_length=200)
     capacity = models.PositiveBigIntegerField()
-    createad_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
