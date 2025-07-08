@@ -1,5 +1,6 @@
 from django.db import models
 from Account.models import CustomUser
+from django.conf import settings
 from Organization.models import OrganizationModel
 # Create your models here.
 
@@ -19,3 +20,14 @@ class EventModel(models.Model):
         return f"{self.title} ({self.organization.organization})"
 
 
+
+class EventRegistration(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    event = models.ForeignKey(EventModel, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('user', 'event')
+    
+    def __str__(self):
+        return f"{self.user.usernam} -> {self.event.title}"
