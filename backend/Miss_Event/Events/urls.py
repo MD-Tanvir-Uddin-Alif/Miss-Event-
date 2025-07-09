@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import OrganizerEventCreateView, OrganizerEventDetailView, PublicEventView
+from .views import OrganizerEventCreateView, OrganizerEventDetailView, PublicEventView, EventRegistrationView
 
 urlpatterns = [
     path('create/', OrganizerEventCreateView.as_view(), name="create_event"),
     path('detail/<int:pk>/', OrganizerEventDetailView.as_view(), name='detail_event'),
     path('public/', PublicEventView.as_view(), name='public_event'),
+    path('register/<int:event_id>/', EventRegistrationView().as_view(), name='register_event'),
 ]

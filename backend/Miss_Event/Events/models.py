@@ -30,4 +30,4 @@ class EventRegistration(models.Model):
         unique_together = ('user', 'event')
     
     def __str__(self):
-        return f"{self.user.usernam} -> {self.event.title}"
+        return f"{self.user.username} -> {self.event.title}"
