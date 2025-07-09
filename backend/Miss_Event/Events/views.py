@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import (
-    CreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
+    CreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView,RetrieveAPIView
 )
 
 from .serializers import EventSerializer, EventRegistrationSerializer
@@ -49,4 +51,15 @@ class EventRegistrationView(CreateAPIView):
         event_id = self.kwargs['event_id']
         event_obj = EventModel.objects.get(id=event_id)
         serializer.save(user=self.request.user, event=event_obj)
+
+
+class CancleRegistration(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, *args, **kwargs):
+        event_id = kwargs['event_id']
+        delete_item = EventRegistration.objects.filter(user=self.request.user, event_id=event_id).delete()
         
+        if delete_item:
+            return Response({"detail": "Registration cancelled."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"detail": "Not registered."}, status=status.HTTP_404_NOT_FOUND)
