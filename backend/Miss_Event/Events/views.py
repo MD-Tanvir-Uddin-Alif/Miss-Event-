@@ -78,9 +78,29 @@ class CancleRegistration(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     
     def delete(self, request, *args, **kwargs):
-        event_id = kwargs['event_id']
-        delete_item = EventRegistration.objects.filter(user=self.request.user, event_id=event_id).delete()
-        
-        if delete_item:
+        user = request.user
+        event_id = kwargs.get('event_id')
+
+        try:
+            registration = EventRegistration.objects.get(user=user, event_id=event_id)
+            event = registration.event
+
+            organizer = event.organization.organizer
+            registration.delete()
+
+            send_event_email(
+                subject="Event Registration Cancelled",
+                message=f"Hi {user.username}, you have successfully cancelled your registration for '{event.title}'.",
+                recipient_email=user.email
+            )
+
+            send_event_email(
+                subject="Event Registration Cancelled by User",
+                message=f"{user.username} has cancelled their registration for your event '{event.title}'.",
+                recipient_email=organizer.email
+            )
+
             return Response({"detail": "Registration cancelled."}, status=status.HTTP_204_NO_CONTENT)
-        return Response({"detail": "Not registered."}, status=status.HTTP_404_NOT_FOUND)
+
+        except EventRegistration.DoesNotExist:
+            return Response({"detail": "Not registered for this event."}, status=status.HTTP_404_NOT_FOUND)
