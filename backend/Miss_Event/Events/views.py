@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import (
@@ -9,6 +10,8 @@ from rest_framework.generics import (
 from .serializers import EventSerializer, EventRegistrationSerializer
 from .models import EventModel, EventRegistration
 from .permissions import IsOrganizerAndOwner
+
+from Utils.email_send_util import send_event_email
 # Create your views here.
 
 
@@ -50,7 +53,25 @@ class EventRegistrationView(CreateAPIView):
     def perform_create(self, serializer):
         event_id = self.kwargs['event_id']
         event_obj = EventModel.objects.get(id=event_id)
-        serializer.save(user=self.request.user, event=event_obj)
+        user = self.request.user
+        
+        if EventRegistration.objects.filter(user=user, event=event_obj).exists():
+            raise ValidationError({"detail": "You are already registered for this event."})
+        serializer.save(user=user, event=event_obj)
+        
+        
+        send_event_email(
+            subject="Event Registration Successful",
+            message=f"Hi {user.username}, you successfully registered for {event_obj.title}.",
+            recipient_email=user.email
+        )
+        
+        organizer = event_obj.organization.organizer
+        send_event_email(
+        subject="Someone Registered for Your Event!",
+        message=f"User {user.username} just registered for your event '{event_obj.title}'.",
+        recipient_email=organizer.email
+        )
 
 
 class CancleRegistration(RetrieveAPIView):

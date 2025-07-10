@@ -6,6 +6,6 @@ def send_event_email(subject, message, recipient_email):
         subject=subject,
         message=message,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=recipient_email,
+        recipient_list=[recipient_email],
         fail_silently=False
     )
