@@ -33,6 +33,43 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
     queryset = EventModel.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsOrganizerAndOwner]
+    
+    def perform_update(self, serializer):
+        event = self.get_object()
+        old_title = event.title
+        updated_event = serializer.save()
+        
+        registrations = EventRegistration.objects.filter(event=updated_event)
+        for reg in registrations:
+            send_event_email(
+                subject="Event Updated",
+                message=(
+                    f"Hi {reg.user.username},\n\n"
+                    f"The event '{old_title}' you registered for has been updated.\n"
+                    f"New Title: {updated_event.title}\n"
+                    f"Start: {updated_event.start_time}\n"
+                    f"End: {updated_event.end_time}\n"
+                    f"Location: {updated_event.location}"
+                ),
+                recipient_email=reg.user.email
+            )
+    
+    def perform_destroy(self, instance):
+        event_title = instance.title
+        registrations = EventRegistration.objects.filter(event=updated_event)
+        
+        
+        for reg in registrations:
+            send_event_email(
+                subject="Event Cancelled",
+                message=(
+                    f"Hi {reg.user.username},\n\n"
+                    f"The event '{event_title}' you registered for has been cancelled by the organizer.\n"
+                    f"We're sorry for the inconvenience."
+                ),
+                recipient_email=reg.user.email
+            )
+            instance.delete()
 
 
 class PublicEventView(ListAPIView):
