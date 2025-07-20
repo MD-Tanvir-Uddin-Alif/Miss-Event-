@@ -14,9 +14,9 @@ const Navbar = () => {
           <div className="flex items-center space-x-6">
             <NavLink to='/'  className={({isActive})=>`text-black font-semibold ${isActive? 'underline':''}`}>Home</NavLink>
             <a href="#" className="text-black font-semibold hover:underline">Explore</a>
-            <button className="rounded-md border border-black px-4 py-2 text-sm font-medium text-black hover:bg-black hover:text-white transition">
-              Login
-            </button>
+            <NavLink to='/login/'>
+              <button className="rounded-md border border-black px-4 py-2 text-sm font-medium text-black hover:bg-black hover:text-white transition">Login</button>
+            </NavLink>
           </div>
         </div>
       </nav>

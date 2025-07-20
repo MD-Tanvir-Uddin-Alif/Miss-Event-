@@ -4,6 +4,7 @@ import Navbar from './assets/components/Navbar'
 import { HashRouter, Routes,Route } from 'react-router-dom'
 import Home from './assets/components/Home'
 import Register from './assets/components/Register'
+import Login from './assets/components/Login'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}></Route>
           <Route path='register' element={<Register/>}></Route>
+          <Route path='login' element={<Login/>}></Route>
         </Routes>
       </HashRouter>
     </div>
