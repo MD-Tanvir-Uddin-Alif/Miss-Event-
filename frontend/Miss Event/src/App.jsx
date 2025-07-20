@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import Navbar from './assets/components/Navbar'
 import { HashRouter, Routes,Route } from 'react-router-dom'
 import Home from './assets/components/Home'
@@ -8,6 +9,7 @@ function App() {
 
   return (
     <div>
+      <Toaster/>
       <HashRouter>
         <Navbar/>
         <Routes>
