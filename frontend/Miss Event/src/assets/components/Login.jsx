@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -83,9 +84,9 @@ const Login = () => {
 
           <div className="flex flex-col items-center text-center mt-4">
             <p className="text-sm text-black">Don't have an account?</p>
-            <a href="/register" className="text-sm text-black hover:underline">
+            <Link to="/register/" className="text-sm text-black hover:underline">
               Register Yourself
-            </a>
+            </Link>
           </div>
         </form>
       </div>

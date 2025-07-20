@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {Camera, Shield, Zap, Headphones,Building, Link, Megaphone} from 'lucide-react';
+import {Camera, Shield, Zap, Headphones,Building, Megaphone} from 'lucide-react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -58,7 +59,7 @@ const UserForm = ({ formData, onChange, onSubmit, onImageChange, avatarPreview }
       </div>
       <button type="button" onClick={onSubmit} className="w-full py-3.5 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition duration-300 shadow-lg">Create Account</button>
       <div className="text-center text-sm text-gray-600 mt-4">
-        Already have an account? <a href="#" className="font-medium text-black hover:underline">Sign in</a>
+        Already have an account? <Link to='/login/' className="font-medium text-black hover:underline">Sign in</Link>
       </div>
     </div>
   </div>
@@ -90,7 +91,7 @@ const OrganizationForm = ({ formData, onChange, onSubmit, onImageChange, logoPre
       <InputField label="Confirm Password" type="password" name="password1" placeholder="••••••••" value={formData.password1} onChange={onChange} />
       <button type="button" onClick={onSubmit} className="w-full py-3.5 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition duration-300 shadow-lg">Register Organization</button>
       <div className="text-center text-sm text-gray-600 mt-4">
-        Already have an account? <a href="#" className="font-medium text-black hover:underline">Sign in</a>
+        Already have an account? <Link to='/login/' className="font-medium text-black hover:underline">Sign in</Link>
       </div>
     </div>
   </div>
