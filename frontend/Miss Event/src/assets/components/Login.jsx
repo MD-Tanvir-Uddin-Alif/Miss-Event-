@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosPublic from '../../utils/axiospublic';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -21,7 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/user/login/', {
+      const response = await axiosPublic.post('http://127.0.0.1:8000/api/user/login/', {
         username: formData.username,
         password: formData.password
       });
