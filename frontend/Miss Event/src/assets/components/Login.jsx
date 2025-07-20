@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -31,6 +32,7 @@ const Login = () => {
         localStorage.setItem('refreshToken', refresh);
         localStorage.setItem('accessToken', access);
         toast.success("Login successful");
+        navigate('/profile');
       }
     } catch (err) {
       toast.error("Login failed. Please provide the correct information");
