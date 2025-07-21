@@ -53,8 +53,15 @@ class OrganizationRegistrationSerializer(serializers.ModelSerializer):
         return organization
 
 
+class OrganizerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
+
+
 class OrganizationDetailsSerializer(serializers.ModelSerializer):
+    organizer = OrganizerSerializer(read_only=True)
     class Meta:
         model = OrganizationModel
-        fields = ['id', 'organization', 'address1', 'address2', 'phone', 'link', 'email', 'description', 'logo',]
+        fields = ['id', 'organizer','organization', 'address1', 'address2', 'phone', 'link', 'email', 'description', 'logo',]
         read_only_fields = ['id']
