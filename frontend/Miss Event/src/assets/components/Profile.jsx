@@ -23,7 +23,6 @@ const Profile = () => {
       try {
         const res = await axiosInstance.get('/api/organization/details/');
         setOrganization(res.data);
-        console.log(res.data);
       } catch (err) {
         console.error('Failed to fetch organization details:', err);
       }
@@ -61,7 +60,7 @@ const Profile = () => {
             <div className="mb-6 flex justify-center">
               <img
                 className="h-32 w-32 rounded-xl border border-gray-400 object-cover"
-                src={organization.logo || 'https://via.placeholder.com/300x300.png?text=Logo'}
+                src={organization.logo || 'https://placehold.co/300x300?text=Logo'}
                 alt="Organization Logo"
               />
             </div>
@@ -69,7 +68,10 @@ const Profile = () => {
             <div className="mb-8 text-center">
               <h1 className="text-3xl font-bold text-gray-900">{organization.organization}</h1>
               <p className="text-sm text-gray-600">
-                Username: <span className="font-medium text-gray-800">{organization.organizer}</span>
+                Username:{' '}
+                <span className="font-medium text-gray-800">
+                  {organization.organizer.username}
+                </span>
               </p>
             </div>
 
@@ -84,13 +86,29 @@ const Profile = () => {
               </div>
               <div>
                 <h3 className="text-sm text-gray-500">Website</h3>
-                <a href={organization.link} target="_blank" className="mt-1 text-blue-600 hover:underline">
+                <a
+                  href={organization.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 text-blue-600 hover:underline block"
+                >
                   {organization.link}
                 </a>
               </div>
+            </div>
+
+            <div className="mt-8 space-y-6 text-gray-800">
+              <div>
+                <h3 className="text-sm text-gray-500">Phone</h3>
+                <p className="mt-1">{organization.phone || 'Not provided'}</p>
+              </div>
+              <div>
+                <h3 className="text-sm text-gray-500">Email</h3>
+                <p className="mt-1">{organization.email}</p>
+              </div>
               <div>
                 <h3 className="text-sm text-gray-500">Description</h3>
-                <p className="mt-1">{organization.description}</p>
+                <p className="mt-1 whitespace-pre-wrap">{organization.description}</p>
               </div>
             </div>
 
