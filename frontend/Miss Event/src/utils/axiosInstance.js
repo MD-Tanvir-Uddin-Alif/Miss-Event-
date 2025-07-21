@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const res = await axios.post(`${baseURL}/api/user/refresh_token/`, {
+        const res = await axios.post(`${baseURL}/api/user/refresh/access_token/`, {
           refresh: refreshToken,
         });
 
