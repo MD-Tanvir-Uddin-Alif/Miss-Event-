@@ -33,6 +33,7 @@ const Login = () => {
         localStorage.setItem('refreshToken', refresh);
         localStorage.setItem('accessToken', access);
         toast.success("Login successful");
+        window.dispatchEvent(new Event('loginStatusChanged'));
         navigate('/profile');
       }
     } catch (err) {
