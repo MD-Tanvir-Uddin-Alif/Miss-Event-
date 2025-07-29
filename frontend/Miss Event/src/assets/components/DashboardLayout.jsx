@@ -1,27 +1,42 @@
 import React from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = () => {
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname.endsWith(path);
+
+  const navItems = [
+    { path: '/dashboard/profile', label: 'Organization' },
+    // { path: '/dashboard/create-event', label: 'Create Event' },
+    // { path: '/dashboard/events', label: 'Events' },
+  ];
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-64 flex-shrink-0 flex flex-col justify-between border-r border-gray-300 bg-white p-6 shadow-md">
-        <div>
-          <h2 className="mb-6 text-xl font-bold text-gray-800">Dashboard</h2>
-          <nav className="space-y-4">
-            <button className="w-full rounded-lg bg-black px-4 py-2 text-left text-white transition hover:bg-gray-800">
-              Organization
-            </button>
-            <button className="w-full rounded-lg border border-black px-4 py-2 text-left text-black transition hover:bg-black hover:text-white">
-              Create Event
-            </button>
-            <button className="w-full rounded-lg border border-black px-4 py-2 text-left text-black transition hover:bg-black hover:text-white">
-              Events
-            </button>
-          </nav>
-        </div>
+    <div className="flex min-h-screen">
+      <aside className="w-64 bg-white shadow-xl p-6 space-y-8 border-r border-gray-300">
+        <h2 className="text-3xl font-bold text-gray-800">Dashboard</h2>
+
+        <nav className="space-y-4">
+          {navItems.map((item) => (
+            <Link key={item.path} to={item.path} className='block'>
+              <button
+                className={`flex items-center gap-2 w-full py-3 px-4 rounded-xl border text-left text-sm font-medium transition-all duration-200
+                  ${
+                    isActive(item.path)
+                      ? 'bg-gray-800 text-white shadow-md'
+                      : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'
+                  }`}
+              >
+                {item.label}
+              </button>
+            </Link>
+          ))}
+        </nav>
       </aside>
 
-      <main className="flex-1 p-8 overflow-auto">
-        {children}
+      <main className="flex-1 bg-gray-100 p-8 overflow-y-auto">
+        <Outlet />
       </main>
     </div>
   );

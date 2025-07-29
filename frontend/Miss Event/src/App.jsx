@@ -7,6 +7,7 @@ import Register from './assets/components/Register'
 import Login from './assets/components/Login'
 import Profile from './assets/components/Profile'
 import PrivateRoute from './utils/PrivateRoute'
+import DashboardLayout from './assets/components/DashboardLayout'
 
 function App() {
 
@@ -20,6 +21,10 @@ function App() {
           <Route path='register' element={<Register/>}></Route>
           <Route path='login' element={<Login/>}></Route>
           <Route path='profile' element={<PrivateRoute><Profile/></PrivateRoute>}></Route>
+          <Route path='dashboard' element={<PrivateRoute><DashboardLayout></DashboardLayout>
+            <Route path="profile" element={<Profile/>} />
+          </PrivateRoute>}>
+          </Route>
         </Routes>
       </HashRouter>
     </div>

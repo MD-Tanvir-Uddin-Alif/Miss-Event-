@@ -39,7 +39,7 @@ const Profile = () => {
   //Organizer View
   if (profile.is_organizer && organization) {
     return (
-      <DashboardLayout>
+      // <DashboardLayout>
         <div className="w-full max-w-4xl mx-auto rounded-2xl border border-gray-300 bg-white p-8 shadow-lg">
           <div className="mb-6 flex justify-center">
             <img
@@ -94,8 +94,17 @@ const Profile = () => {
               <p>{organization.description || 'N/A'}</p>
             </div>
           </div>
+
+          <div className="mt-8 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-4">
+          <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
+            Edit Profile
+          </button>
+          <button className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
+            Change Password
+          </button>
         </div>
-      </DashboardLayout>
+        </div>
+      // </DashboardLayout>
     );
   }
 
