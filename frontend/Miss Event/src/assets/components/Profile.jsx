@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
+import DashboardLayout from './DashboardLayout';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -35,97 +36,70 @@ const Profile = () => {
     return <div className="text-center text-lg mt-10">Loading profile...</div>;
   }
 
+  //Organizer View
   if (profile.is_organizer && organization) {
     return (
-      <div className="flex min-h-screen bg-gray-100">
-        <aside className="w-64 flex-shrink-0 flex flex-col justify-between border-r border-gray-300 bg-white p-6 shadow-md">
-          <div>
-            <h2 className="mb-6 text-xl font-bold text-gray-800">Dashboard</h2>
-            <nav className="space-y-4">
-              <button className="w-full rounded-lg bg-black px-4 py-2 text-left text-white transition hover:bg-gray-800">
-                Organization
-              </button>
-              <button className="w-full rounded-lg border border-black px-4 py-2 text-left text-black transition hover:bg-black hover:text-white">
-                Create Event
-              </button>
-              <button className="w-full rounded-lg border border-black px-4 py-2 text-left text-black transition hover:bg-black hover:text-white">
-                Events
-              </button>
-            </nav>
+      <DashboardLayout>
+        <div className="w-full max-w-4xl mx-auto rounded-2xl border border-gray-300 bg-white p-8 shadow-lg">
+          <div className="mb-6 flex justify-center">
+            <img
+              className="h-32 w-32 rounded-xl border border-gray-400 object-cover"
+              src={organization.logo || 'https://placehold.co/300x300?text=Logo'}
+              alt="Organization Logo"
+            />
           </div>
-        </aside>
 
-        <main className="flex-1 p-8 overflow-auto">
-          <div className="w-full max-w-4xl mx-auto rounded-2xl border border-gray-300 bg-white p-8 shadow-lg">
-            <div className="mb-6 flex justify-center">
-              <img
-                className="h-32 w-32 rounded-xl border border-gray-400 object-cover"
-                src={organization.logo || 'https://placehold.co/300x300?text=Logo'}
-                alt="Organization Logo"
-              />
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-gray-900">
+              {organization.organization}
+            </h1>
+            <p className="text-sm text-gray-600">
+              Username:{' '}
+              <span className="font-medium text-gray-800">
+                {organization.organizer.username}
+              </span>
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-800">
+            <div>
+              <p className="text-sm font-semibold">Email</p>
+              <p>{organization.email}</p>
             </div>
-
-            <div className="mb-8 text-center">
-              <h1 className="text-3xl font-bold text-gray-900">{organization.organization}</h1>
-              <p className="text-sm text-gray-600">
-                Username:{' '}
-                <span className="font-medium text-gray-800">
-                  {organization.organizer.username}
-                </span>
-              </p>
+            <div>
+              <p className="text-sm font-semibold">Phone</p>
+              <p>{organization.phone || 'N/A'}</p>
             </div>
-
-            <div className="grid grid-cols-1 gap-6 text-gray-800 md:grid-cols-2">
-              <div>
-                <h3 className="text-sm text-gray-500">Address Line 1</h3>
-                <p className="mt-1">{organization.address1}</p>
-              </div>
-              <div>
-                <h3 className="text-sm text-gray-500">Address Line 2</h3>
-                <p className="mt-1">{organization.address2}</p>
-              </div>
-              <div>
-                <h3 className="text-sm text-gray-500">Website</h3>
-                <a
-                  href={organization.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-1 text-blue-600 hover:underline block"
-                >
-                  {organization.link}
-                </a>
-              </div>
+            <div>
+              <p className="text-sm font-semibold">Address Line 1</p>
+              <p>{organization.address1 || 'N/A'}</p>
             </div>
-
-            <div className="mt-8 space-y-6 text-gray-800">
-              <div>
-                <h3 className="text-sm text-gray-500">Phone</h3>
-                <p className="mt-1">{organization.phone || 'Not provided'}</p>
-              </div>
-              <div>
-                <h3 className="text-sm text-gray-500">Email</h3>
-                <p className="mt-1">{organization.email}</p>
-              </div>
-              <div>
-                <h3 className="text-sm text-gray-500">Description</h3>
-                <p className="mt-1 whitespace-pre-wrap">{organization.description}</p>
-              </div>
+            <div>
+              <p className="text-sm font-semibold">Address Line 2</p>
+              <p>{organization.address2 || 'N/A'}</p>
             </div>
-
-            <div className="mt-10 flex justify-center gap-4">
-              <button className="rounded-lg bg-black px-5 py-2 text-white transition hover:bg-gray-800">
-                Update Info
-              </button>
-              <button className="rounded-lg border border-black px-5 py-2 text-black transition hover:bg-black hover:text-white">
-                Change Password
-              </button>
+            <div className="sm:col-span-2">
+              <p className="text-sm font-semibold">Website</p>
+              <a
+                href={organization.link}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                {organization.link || 'N/A'}
+              </a>
+            </div>
+            <div className="sm:col-span-2">
+              <p className="text-sm font-semibold">Description</p>
+              <p>{organization.description || 'N/A'}</p>
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </DashboardLayout>
     );
   }
 
+  //Normal User View
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-xl">
@@ -141,22 +115,22 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="space-y-4 text-black">
+        <div className="space-y-4 text-gray-800">
           <div>
-            <label className="block text-sm font-medium text-gray-500">First Name</label>
-            <p className="mt-1">{profile.first_name}</p>
+            <p className="text-sm font-semibold">Full Name</p>
+            <p>{profile.first_name} {profile.last_name}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500">Last Name</label>
-            <p className="mt-1">{profile.last_name}</p>
+            <p className="text-sm font-semibold">Email</p>
+            <p>{profile.email}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500">Email</label>
-            <p className="mt-1">{profile.email}</p>
+            <p className="text-sm font-semibold">Phone</p>
+            <p>{profile.phone || 'N/A'}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500">Phone</label>
-            <p className="mt-1">{profile.phone || 'Not added'}</p>
+            <p className="text-sm font-semibold">Address</p>
+            <p>{profile.address || 'N/A'}</p>
           </div>
         </div>
 

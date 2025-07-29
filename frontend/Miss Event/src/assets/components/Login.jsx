@@ -88,7 +88,7 @@ const Login = () => {
 
           <div className="flex flex-col items-center text-center mt-4">
             <p className="text-sm text-black">Don't have an account?</p>
-            <Link to="/register/" className="text-sm text-black hover:underline">
+            <Link to="/register/" className="text-sm text-black font-bold hover:underline">
               Register Yourself
             </Link>
           </div>
