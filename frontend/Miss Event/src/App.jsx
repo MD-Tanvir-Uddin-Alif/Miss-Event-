@@ -21,9 +21,8 @@ function App() {
           <Route path='register' element={<Register/>}></Route>
           <Route path='login' element={<Login/>}></Route>
           <Route path='profile' element={<PrivateRoute><Profile/></PrivateRoute>}></Route>
-          <Route path='dashboard' element={<PrivateRoute><DashboardLayout></DashboardLayout>
-            <Route path="profile" element={<Profile/>} />
-          </PrivateRoute>}>
+          <Route path='dashboard' element={<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>}>
+            <Route path='profile' element={<Profile/>}/>
           </Route>
         </Routes>
       </HashRouter>
