@@ -9,6 +9,7 @@ import Profile from './assets/components/Profile'
 import PrivateRoute from './utils/PrivateRoute'
 import DashboardLayout from './assets/components/DashboardLayout'
 import EditProfile from './assets/components/EditProfile'
+import EditOrganization from './assets/components/EditOrganization'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='login' element={<Login/>}></Route>
           <Route path='profile' element={<PrivateRoute><Profile/></PrivateRoute>}></Route>
           <Route path='profile/edit' element={<PrivateRoute><EditProfile/></PrivateRoute>}></Route>
+          <Route path='organization_info/edit' element={<PrivateRoute><EditOrganization/></PrivateRoute>}></Route>
           <Route path='dashboard' element={<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>}>
             <Route path='profile' element={<Profile/>}/>
           </Route>

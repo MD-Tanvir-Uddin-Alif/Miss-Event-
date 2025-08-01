@@ -7,7 +7,6 @@ const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [organization, setOrganization] = useState(null);
   const navigate = useNavigate();
-  const profile_info = useLocation();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -99,7 +98,7 @@ const Profile = () => {
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-          <Link to='/profile/edit' state={{profile_info:organization}}>
+          <Link to='/organization_info/edit' state={{info:organization}}>
             <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
             Edit Profile
           </button>
@@ -152,12 +151,9 @@ const Profile = () => {
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-          <Link to='/profile/edit' state={{profile_info:profile}}>
-            <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-            Edit Profile
-            </button>
+          <Link to='/profile/edit' state={{info:profile}}>
+            <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">Edit Profile</button>
           </Link>
-          
           <button  className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
             Change Password
           </button>

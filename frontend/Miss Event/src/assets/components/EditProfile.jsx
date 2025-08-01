@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom'
 
 const EditProfile = () => {
     const location = useLocation();
-    const profile_info = location?.state?.profile_info;
+    const info = location?.state?.info;
   return (
     <div>
-        <p>come edit me  {profile_info.username}</p>
+        <p>come edit me {info.username} </p>
     </div>
   )
 }
