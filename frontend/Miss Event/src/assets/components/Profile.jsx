@@ -106,9 +106,11 @@ const Profile = () => {
           <button onClick={()=> navigate('/dashboard')} className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
             Event
           </button>
-          <button className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
+          <Link to='/reset-password'>
+            <button className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
             Change Password
-          </button>
+            </button>
+          </Link>
         </div>
         </div>
       // </DashboardLayout>
