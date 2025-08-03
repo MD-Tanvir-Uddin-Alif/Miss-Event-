@@ -4,12 +4,18 @@ import axiosInstance from '../../utils/axiosInstance';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState(null);
   const [isLogin, setIsLogin] = useState(!!localStorage.getItem('accessToken'));
 
   useEffect(() => {
     const updateLoginStatus = () => {
       setIsLogin(!!localStorage.getItem('accessToken'));
+
+      if (!localStorage.getItem('accessToken')) {
+        setUserProfile(null);
+      }
     };
+
 
     window.addEventListener('loginStatusChanged', updateLoginStatus);
 
@@ -17,6 +23,29 @@ const Navbar = () => {
       window.removeEventListener('loginStatusChanged', updateLoginStatus);
     };
   }, []);
+
+
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (isLogin) {
+        try {
+          const res = await axiosInstance.get('/api/user/profile/');
+          setUserProfile(res.data);
+
+          // If user is an organizer, fetch organization details for logo
+          if (res.data.is_organizer) {
+            const orgRes = await axiosInstance.get('/api/organization/details/');
+            setUserProfile(prev => ({ ...prev, organization: orgRes.data }));
+          }
+        } catch (err) {
+          console.error('Failed to fetch profile:', err);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [isLogin]);
 
   const handleLogout = async () => {
     // localStorage.clear();
@@ -31,13 +60,29 @@ const Navbar = () => {
 
       localStorage.clear();
       setIsLogin(false);
+      setUserProfile(null);
       navigate('/login/');
     }catch(err){
       localStorage.clear();
       setIsLogin(false);
+      setUserProfile(null);
       navigate('/login');
     }
   };
+
+
+  const getProfileImage = () => {
+    if (!userProfile) return 'https://via.placeholder.com/60';
+    
+    // If user is organizer and has organization data, use organization logo
+    if (userProfile.is_organizer && userProfile.organization?.logo) {
+      return userProfile.organization.logo;
+    }
+    
+    // Otherwise use user profile image
+    return userProfile.image || 'https://i.pravatar.cc/150?img=5';
+  };
+
 
   return (
     <nav className="bg-white shadow sticky top-0 z-10">
@@ -59,9 +104,12 @@ const Navbar = () => {
               <input type="checkbox" id="dropdownToggle" className="hidden peer" />
               <label htmlFor="dropdownToggle" className="cursor-pointer">
                 <img
-                  src="https://via.placeholder.com/60"
+                  src={getProfileImage()}
                   alt="Profile"
                   className="w-14 h-14 rounded-full border border-black object-cover"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/60';
+                  }}
                 />
               </label>
 
