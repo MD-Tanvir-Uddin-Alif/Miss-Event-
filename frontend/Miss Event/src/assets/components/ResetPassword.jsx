@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import axiosInstance from '../../utils/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
+    const navigate = useNavigate();
   const [formData, setFormData] = useState({
     old_password: '',
     new_password: '',

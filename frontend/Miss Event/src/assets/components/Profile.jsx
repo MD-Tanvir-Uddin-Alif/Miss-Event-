@@ -156,9 +156,11 @@ const Profile = () => {
           <Link to='/profile/edit' state={{info:profile}}>
             <button className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">Edit Profile</button>
           </Link>
-          <button  className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
+          <Link to='/reset-password'>
+            <button  className="px-4 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
             Change Password
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
     </div>
