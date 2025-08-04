@@ -8,7 +8,7 @@ const DashboardLayout = () => {
 
   const navItems = [
     { path: '/dashboard/profile', label: 'Organization' },
-    // { path: '/dashboard/create-event', label: 'Create Event' },
+    { path: '/dashboard/create-event', label: 'Create Event' },
     // { path: '/dashboard/events', label: 'Events' },
   ];
 
