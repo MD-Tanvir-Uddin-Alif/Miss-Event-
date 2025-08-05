@@ -72,6 +72,16 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
             instance.delete()
 
 
+
+class OrganizationEventsView(ListAPIView):
+    serializer_class = EventSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        org_id = self.kwargs['org_id']
+        return EventModel.objects.filter(organization__id=org_id)
+
+
 class PublicEventView(ListAPIView):
     queryset = EventModel.objects.select_related('organization').order_by('start_time')
     serializer_class = EventSerializer

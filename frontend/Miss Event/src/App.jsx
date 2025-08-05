@@ -12,13 +12,14 @@ import EditProfile from './assets/components/EditProfile'
 import EditOrganization from './assets/components/EditOrganization'
 import ResetPassword from './assets/components/ResetPassword'
 import CreateEvent from './assets/components/CreateEvent'
+import GetEvent from './assets/components/GetEvent'
 
 function App() {
 
   return (
     <div>
       <Toaster/>
-      <HashRouter>
+      <HashRouter> 
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
@@ -31,6 +32,7 @@ function App() {
           <Route path='dashboard' element={<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>}>
             <Route path='profile' element={<Profile/>}/>
             <Route path='create-event' element={<CreateEvent/>}/>
+            <Route path='events' element={<GetEvent/>}/>
           </Route>
         </Routes>
       </HashRouter>
