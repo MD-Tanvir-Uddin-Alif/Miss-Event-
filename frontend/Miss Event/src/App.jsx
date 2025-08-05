@@ -33,6 +33,7 @@ function App() {
             <Route path='profile' element={<Profile/>}/>
             <Route path='create-event' element={<CreateEvent/>}/>
             <Route path='events' element={<GetEvent/>}/>
+            <Route path='event-update' element={<GetEvent/>}/>
           </Route>
         </Routes>
       </HashRouter>

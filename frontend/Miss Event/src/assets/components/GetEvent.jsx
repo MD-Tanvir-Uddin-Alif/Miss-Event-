@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const GetEvent = () => {
   const [events, setEvents] = useState([]);
@@ -78,9 +79,11 @@ const GetEvent = () => {
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-xl font-semibold">{event.title}</h2>
               <div className="flex gap-2">
-                <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
+                <Link to='/dashboard/event-update'>
+                  <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
                   Edit
-                </button>
+                  </button>
+                </Link>
                 <button
                   onClick={() => handleDelete(event.id)}
                   className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition"

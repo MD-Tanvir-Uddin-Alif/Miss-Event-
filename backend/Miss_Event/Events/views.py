@@ -59,17 +59,17 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
         registrations = EventRegistration.objects.filter(event=instance)
         
         
-        for reg in registrations:
-            send_event_email(
-                subject="Event Cancelled",
-                message=(
-                    f"Hi {reg.user.username},\n\n"
-                    f"The event '{event_title}' you registered for has been cancelled by the organizer.\n"
-                    f"We're sorry for the inconvenience."
-                ),
-                recipient_email=reg.user.email
-            )
-            instance.delete()
+        # for reg in registrations:
+        #     send_event_email(
+        #         subject="Event Cancelled",
+        #         message=(
+        #             f"Hi {reg.user.username},\n\n"
+        #             f"The event '{event_title}' you registered for has been cancelled by the organizer.\n"
+        #             f"We're sorry for the inconvenience."
+        #         ),
+        #         recipient_email=reg.user.email
+        #     )
+        instance.delete()
 
 
 
