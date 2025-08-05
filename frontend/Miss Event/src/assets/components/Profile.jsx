@@ -25,6 +25,7 @@ const Profile = () => {
     const fetchOrganizationDetails = async () => {
       try {
         const res = await axiosInstance.get('/api/organization/details/');
+        localStorage.setItem('organization_id', res.data.id);
         setOrganization(res.data);
       } catch (err) {
         console.error('Failed to fetch organization details:', err);
