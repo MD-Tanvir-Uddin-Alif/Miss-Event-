@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
+import toast from 'react-hot-toast';
 
 const GetEvent = () => {
   const [events, setEvents] = useState([]);
@@ -17,11 +18,57 @@ const GetEvent = () => {
         setEvents(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);
+        toast.error('Failed to fetch events');
       }
     };
 
     fetchEvents();
   }, []);
+
+  // Toast confirmation helper
+  const confirmDeleteToast = (onConfirm) => {
+    const id = toast(
+      (t) => (
+        <div className="space-y-3">
+          <p>Are you sure you want to delete this event?</p>
+          <div className="flex justify-end gap-3">
+            <button
+              className="px-3 py-1 border rounded text-black border-black hover:bg-black hover:text-white transition"
+              onClick={() => {
+                onConfirm();
+                toast.dismiss(id);
+              }}
+            >
+              Yes
+            </button>
+            <button
+              className="px-3 py-1 border rounded text-black border-black hover:bg-black hover:text-white transition"
+              onClick={() => toast.dismiss(id)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Infinity,
+        position: 'top-center',
+      }
+    );
+  };
+
+  const handleDelete = (eventId) => {
+    confirmDeleteToast(async () => {
+      try {
+        await axiosInstance.delete(`/api/event/detail/${eventId}/`);
+        setEvents((prev) => prev.filter(event => event.id !== eventId));
+        toast.success('Event deleted successfully');
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        toast.error('Failed to delete event');
+      }
+    });
+  };
 
   return (
     <div className="text-black min-h-screen flex items-center justify-center py-10 px-4">
@@ -34,7 +81,10 @@ const GetEvent = () => {
                 <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
                   Edit
                 </button>
-                <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
+                <button
+                  onClick={() => handleDelete(event.id)}
+                  className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition"
+                >
                   Delete
                 </button>
               </div>

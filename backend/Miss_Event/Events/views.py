@@ -56,7 +56,7 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
     
     def perform_destroy(self, instance):
         event_title = instance.title
-        registrations = EventRegistration.objects.filter(event=updated_event)
+        registrations = EventRegistration.objects.filter(event=instance)
         
         
         for reg in registrations:
