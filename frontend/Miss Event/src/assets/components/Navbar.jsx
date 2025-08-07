@@ -74,12 +74,10 @@ const Navbar = () => {
   const getProfileImage = () => {
     if (!userProfile) return 'https://via.placeholder.com/60';
     
-    // If user is organizer and has organization data, use organization logo
     if (userProfile.is_organizer && userProfile.organization?.logo) {
       return userProfile.organization.logo;
     }
     
-    // Otherwise use user profile image
     return userProfile.image || 'https://i.pravatar.cc/150?img=5';
   };
 
@@ -93,7 +91,7 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-6">
           <NavLink to='/' className={({ isActive }) => `text-black font-semibold ${isActive ? 'underline' : ''}`}>Home</NavLink>
-          <a href="#" className="text-black font-semibold hover:underline">Explore</a>
+          <NavLink to='/events' className={({ isActive }) => `text-black font-semibold ${isActive ? 'underline' : ''}`}>Events</NavLink>
 
           {!isLogin ? (
             <NavLink to='/login/'>

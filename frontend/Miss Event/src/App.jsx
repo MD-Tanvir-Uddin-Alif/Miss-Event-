@@ -14,6 +14,7 @@ import ResetPassword from './assets/components/ResetPassword'
 import CreateEvent from './assets/components/CreateEvent'
 import GetEvent from './assets/components/GetEvent'
 import UpdateEvent from './assets/components/UpdateEvent'
+import PubllicEvent from './assets/components/PubllicEvent'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
+          <Route path='events' element={<PubllicEvent/>}></Route>
           <Route path='register' element={<Register/>}></Route>
           <Route path='login' element={<Login/>}></Route>
           <Route path='profile' element={<PrivateRoute><Profile/></PrivateRoute>}></Route>
