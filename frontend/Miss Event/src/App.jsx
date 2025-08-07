@@ -13,6 +13,7 @@ import EditOrganization from './assets/components/EditOrganization'
 import ResetPassword from './assets/components/ResetPassword'
 import CreateEvent from './assets/components/CreateEvent'
 import GetEvent from './assets/components/GetEvent'
+import UpdateEvent from './assets/components/UpdateEvent'
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
             <Route path='profile' element={<Profile/>}/>
             <Route path='create-event' element={<CreateEvent/>}/>
             <Route path='events' element={<GetEvent/>}/>
-            <Route path='event-update' element={<GetEvent/>}/>
+            <Route path='event-update' element={<UpdateEvent/>}/>
           </Route>
         </Routes>
       </HashRouter>

@@ -79,7 +79,7 @@ const GetEvent = () => {
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-xl font-semibold">{event.title}</h2>
               <div className="flex gap-2">
-                <Link to='/dashboard/event-update'>
+                <Link to='/dashboard/event-update' state={event}>
                   <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
                   Edit
                   </button>
