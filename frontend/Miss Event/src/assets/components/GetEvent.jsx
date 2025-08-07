@@ -26,7 +26,6 @@ const GetEvent = () => {
     fetchEvents();
   }, []);
 
-  // Toast confirmation helper
   const confirmDeleteToast = (onConfirm) => {
     const id = toast(
       (t) => (
@@ -58,8 +57,6 @@ const GetEvent = () => {
     );
   };
 
-  console.log(events);
-
   const handleDelete = (eventId) => {
     confirmDeleteToast(async () => {
       try {
@@ -77,29 +74,38 @@ const GetEvent = () => {
     <div className="text-black min-h-screen flex items-center justify-center py-10 px-4">
       <div className="w-full max-w-4xl space-y-6">
         {events.map((event) => (
-          <div key={event.id} className="bg-white border border-gray-300 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-xl font-semibold">{event.title}</h2>
-              <div className="flex gap-2">
-                <Link to='/dashboard/event-update' state={event}>
-                  <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
-                  Edit
+          <div key={event.id} className="bg-white border border-gray-300 rounded-xl overflow-hidden shadow-sm">
+            {event.banner && (
+              <div className="w-full h-32 overflow-hidden">
+                <img
+                  src={event.banner}
+                  alt={`${event.title} banner`}
+                  className="w-full h-full object-cover object-center"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+            
+            <div className="p-5">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold">{event.title}</h2>
+                <div className="flex gap-2">
+                  <Link to='/dashboard/event-update' state={event}>
+                    <button className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition">
+                      Edit
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(event.id)}
+                    className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition"
+                  >
+                    Delete
                   </button>
-                </Link>
-                <button
-                  onClick={() => handleDelete(event.id)}
-                  className="text-sm px-4 py-1 border border-black rounded-full hover:bg-black hover:text-white transition"
-                >
-                  Delete
-                </button>
+                </div>
               </div>
             </div>
-            <ul className="text-sm space-y-1">
-              <li><strong>Start:</strong> {event.start_time}</li>
-              <li><strong>End:</strong> {event.end_time}</li>
-              <li><strong>Location:</strong> {event.location}</li>
-              <li><strong>Description:</strong> {event.description}</li>
-            </ul>
           </div>
         ))}
       </div>
