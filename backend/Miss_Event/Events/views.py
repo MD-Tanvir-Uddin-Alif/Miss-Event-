@@ -40,19 +40,19 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
         updated_event = serializer.save()
         
         registrations = EventRegistration.objects.filter(event=updated_event)
-        for reg in registrations:
-            send_event_email(
-                subject="Event Updated",
-                message=(
-                    f"Hi {reg.user.username},\n\n"
-                    f"The event '{old_title}' you registered for has been updated.\n"
-                    f"New Title: {updated_event.title}\n"
-                    f"Start: {updated_event.start_time}\n"
-                    f"End: {updated_event.end_time}\n"
-                    f"Location: {updated_event.location}"
-                ),
-                recipient_email=reg.user.email
-            )
+        # for reg in registrations:
+        #     send_event_email(
+        #         subject="Event Updated",
+        #         message=(
+        #             f"Hi {reg.user.username},\n\n"
+        #             f"The event '{old_title}' you registered for has been updated.\n"
+        #             f"New Title: {updated_event.title}\n"
+        #             f"Start: {updated_event.start_time}\n"
+        #             f"End: {updated_event.end_time}\n"
+        #             f"Location: {updated_event.location}"
+        #         ),
+        #         recipient_email=reg.user.email
+        #     )
     
     def perform_destroy(self, instance):
         event_title = instance.title

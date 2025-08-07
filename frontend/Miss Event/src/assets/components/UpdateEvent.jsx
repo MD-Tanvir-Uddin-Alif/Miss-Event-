@@ -1,20 +1,24 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import axiosInstance from '../../utils/axiosInstance';
+
+
 
 const UpdateEvent = () => {
   const location = useLocation();
+  const  navigate = useNavigate();
   const event = location.state ;
 
 
   const [formData, setFormData] = useState({
-      title: event.title,
-      location: event.location,
-      description: event.description,
-      start_time: event.start_time,
-      end_time: event.end_time,
-      capacity: event.capacity,
+      title: event?.title,
+      location: event?.location,
+      description: event?.description,
+      start_time: event?.start_time,
+      end_time: event?.end_time,
+      capacity: event?.capacity,
     });
 
 
@@ -36,13 +40,13 @@ const UpdateEvent = () => {
     setSuccess('');
 
     try {
-      await axiosInstance.post('/api/event/create/',
+      await axiosInstance.patch(`/api/event/detail/${event.id}/`,
         {
             ...formData
         }
       );
 
-      toast.success("Event created sucessfully");
+      toast.success("Event updated sucessfully");
 
     //   setSuccess('Event created successfully!');
       setFormData({
@@ -53,6 +57,8 @@ const UpdateEvent = () => {
         end_time: '',
         capacity: '',
       });
+
+      navigate('/dashboard/events');
     } catch (err) {
       console.error(err);
       toast.error('Failed to create event. Please check your input.');

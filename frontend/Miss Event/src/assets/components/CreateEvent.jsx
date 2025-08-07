@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import axiosInstance from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const CreateEvent = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     location: '',
@@ -46,6 +48,8 @@ const CreateEvent = () => {
         end_time: '',
         capacity: '',
       });
+      navigate('/dashboard/events');
+
     } catch (err) {
       console.error(err);
       toast.error('Failed to create event. Please check your input.');
