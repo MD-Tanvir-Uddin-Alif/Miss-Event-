@@ -12,6 +12,7 @@ class EventModel(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     location = models.CharField(max_length=200)
+    banner = models.ImageField(upload_to="banners/" ,blank=True, null=True)
     capacity = models.PositiveBigIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
