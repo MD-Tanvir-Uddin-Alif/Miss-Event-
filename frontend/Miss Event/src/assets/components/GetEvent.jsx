@@ -58,7 +58,7 @@ const GetEvent = () => {
     );
   };
 
-  // console.log(events);
+  console.log(events);
 
   const handleDelete = (eventId) => {
     confirmDeleteToast(async () => {
