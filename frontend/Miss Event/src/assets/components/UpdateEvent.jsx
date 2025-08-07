@@ -10,6 +10,7 @@ const UpdateEvent = () => {
   const location = useLocation();
   const  navigate = useNavigate();
   const event = location.state ;
+  // console.log(event)
 
 
   const [formData, setFormData] = useState({
