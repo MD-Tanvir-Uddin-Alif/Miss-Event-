@@ -71,9 +71,9 @@ const Login = () => {
               className="mt-1 block w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             />
             <div className="text-right mt-1">
-              <a href="/forgot-password" className="text-sm text-black hover:underline">
+              <Link to="/forget/password" className="text-sm text-black hover:underline">
                 Forgot password?
-              </a>
+              </Link>
             </div>
           </div>
 
