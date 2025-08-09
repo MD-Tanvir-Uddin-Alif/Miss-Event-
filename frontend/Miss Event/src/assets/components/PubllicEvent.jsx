@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axiosPublic from '../../utils/axiospublic'
+import { useNavigate } from 'react-router-dom'
 
 
 const PubllicEvent = () => {
   const [events, setEvents] = useState([])
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -36,7 +38,7 @@ const PubllicEvent = () => {
                 <p className="text-sm text-gray-500">
                   {new Date(event.start_time).toLocaleString()} → {new Date(event.end_time).toLocaleString()}
                 </p>
-                <button className="w-fit mt-2 bg-gray-200 text-black text-sm px-4 py-1 rounded-md hover:bg-gray-300 transition">
+                <button onClick={()=> navigate('/event/detail', {state:{details:event}})} className="w-fit mt-2 bg-gray-200 text-black text-sm px-4 py-1 rounded-md hover:bg-gray-300 transition">
                   View Details
                 </button>
               </div>

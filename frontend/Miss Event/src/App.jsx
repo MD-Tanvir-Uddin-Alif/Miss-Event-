@@ -15,6 +15,7 @@ import CreateEvent from './assets/components/CreateEvent'
 import GetEvent from './assets/components/GetEvent'
 import UpdateEvent from './assets/components/UpdateEvent'
 import PubllicEvent from './assets/components/PubllicEvent'
+import EventDetail from './assets/components/EventDetail'
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}></Route>
           <Route path='events' element={<PubllicEvent/>}></Route>
+          <Route path='event/detail' element={<EventDetail/>}></Route>
           <Route path='register' element={<Register/>}></Route>
           <Route path='login' element={<Login/>}></Route>
           <Route path='profile' element={<PrivateRoute><Profile/></PrivateRoute>}></Route>
