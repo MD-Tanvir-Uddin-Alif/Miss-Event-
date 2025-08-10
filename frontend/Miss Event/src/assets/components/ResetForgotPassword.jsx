@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import axiospublic from '../../utils/axiospublic';
+import { useSearchParams } from 'react-router-dom';
 
 const ResetForgotPassword = () => {
   const [formData, setFormData] = useState({
     new_password: '',
     confirm_password: '',
   });
+
+  const [searchParams] = useSearchParams();
+  const uid = searchParams.get('uid');
+  const token = searchParams.get('token');
 
   const [loading, setLoading] = useState(false);
 
@@ -25,14 +30,20 @@ const ResetForgotPassword = () => {
       return;
     }
 
+    if (!uid || !token) {
+      toast.error('Invalid password reset link.');
+      return;
+    }
+
     setLoading(true);
     try {
-      await axiospublic.post('/api/user/reset-password/confirm/', {
-        new_password: formData.new_password,
+      await axiospublic.post(`/api/user/reset-password/confirm/${uid}/${token}/`, {
+        password: formData.new_password, // note: key "password" per your Django view
       });
 
       toast.success('Password reset successfully!');
       setFormData({ new_password: '', confirm_password: '' });
+      // Optionally redirect user here to login page
     } catch (err) {
       toast.error('Something went wrong. Please try again.');
       console.error(err);
@@ -42,7 +53,7 @@ const ResetForgotPassword = () => {
   };
 
   return (
-    <div className="bg-gray-50 text-white flex items-center justify-center min-h-screen">
+    <div className="bg-gray-50 text-white flex items-center justify-center min-h-screen px-4">
       <div className="bg-white text-black p-8 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-6 text-center">Reset Password</h2>
 

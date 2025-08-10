@@ -99,7 +99,9 @@ class PasswordResetRequestView(APIView):
         token = password_reset_token.make_token(user)
         uid = user.id
         
-        reset_link = f"http://127.0.0.1:8000/api/user/reset-password/confirm/{uid}/{token}/"
+        # reset_link = f"http://127.0.0.1:8000/api/user/reset-password/confirm/{uid}/{token}/"
+        reset_link = f"http://localhost:5173/#/forget/password/create?uid={uid}&token={token}"
+
         send_mail(
             subject="Password Reset Request",
             message=f"Hi {user.username}, click the link below to reset your password:\n\n{reset_link}",
