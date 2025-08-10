@@ -97,28 +97,60 @@ class EventRegistrationView(CreateAPIView):
     serializer_class = EventRegistrationSerializer
     permission_classes = [IsAuthenticated]
     
-    def perform_create(self, serializer):
+    # def perform_create(self, serializer):
+    #     event_id = self.kwargs['event_id']
+    #     event_obj = EventModel.objects.get(id=event_id)
+    #     user = self.request.user
+        
+    #     if EventRegistration.objects.filter(user=user, event=event_obj).exists():
+    #         raise ValidationError({"detail": "You are already registered for this event."})
+    #     serializer.save(user=user, event=event_obj)
+        
+        
+    #     send_event_email(
+    #         subject="Event Registration Successful",
+    #         message=f"Hi {user.username}, you successfully registered for {event_obj.title}.",
+    #         recipient_email=user.email
+    #     )
+        
+    #     organizer = event_obj.organization.organizer
+    #     send_event_email(
+    #     subject="Someone Registered for Your Event!",
+    #     message=f"User {user.username} just registered for your event '{event_obj.title}'.",
+    #     recipient_email=organizer.email
+    #     )
+
+    def create(self, request, *args, **kwargs):
         event_id = self.kwargs['event_id']
-        event_obj = EventModel.objects.get(id=event_id)
-        user = self.request.user
-        
+        user = request.user
+
+        try:
+            event_obj = EventModel.objects.get(id=event_id)
+        except EventModel.DoesNotExist:
+            return Response({"detail": "Event not found."}, status=status.HTTP_404_NOT_FOUND)
+
         if EventRegistration.objects.filter(user=user, event=event_obj).exists():
-            raise ValidationError({"detail": "You are already registered for this event."})
+            return Response({"detail": "You are already registered for this event."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save(user=user, event=event_obj)
-        
-        
+
+        # Send emails
         send_event_email(
             subject="Event Registration Successful",
             message=f"Hi {user.username}, you successfully registered for {event_obj.title}.",
             recipient_email=user.email
         )
-        
         organizer = event_obj.organization.organizer
         send_event_email(
-        subject="Someone Registered for Your Event!",
-        message=f"User {user.username} just registered for your event '{event_obj.title}'.",
-        recipient_email=organizer.email
+            subject="Someone Registered for Your Event!",
+            message=f"User {user.username} just registered for your event '{event_obj.title}'.",
+            recipient_email=organizer.email
         )
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class CancleRegistration(RetrieveAPIView):
