@@ -17,6 +17,7 @@ import UpdateEvent from './assets/components/UpdateEvent'
 import PubllicEvent from './assets/components/PubllicEvent'
 import EventDetail from './assets/components/EventDetail'
 import EmailPass from './assets/components/EmailPass'
+import ResetForgotPassword from './assets/components/ResetForgotPassword'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='register' element={<Register/>}></Route>
           <Route path='login' element={<Login/>}></Route>
           <Route path='forget/password' element={<EmailPass/>}></Route>
+          <Route path='forget/password/create' element={<ResetForgotPassword/>}></Route>
           <Route path='profile' element={<PrivateRoute><Profile/></PrivateRoute>}></Route>
           <Route path='profile/edit' element={<PrivateRoute><EditProfile/></PrivateRoute>}></Route>
           <Route path='reset-password' element={<PrivateRoute><ResetPassword/></PrivateRoute>}></Route>
