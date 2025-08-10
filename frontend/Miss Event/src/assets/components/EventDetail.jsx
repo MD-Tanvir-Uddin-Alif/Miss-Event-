@@ -1,13 +1,33 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import axiosInstance from '../../utils/axiosInstance';
+
 
 const EventDetail = () => {
-  const location = useLocation();
-  const detail = location.state?.details;
-  const navigate = useNavigate();
+  const location = useLocation()
+  const detail = location.state?.details
+  const navigate = useNavigate()
+
+  const isLoggedIn = !!localStorage.getItem('accessToken')
 
   if (!detail) {
-    return <div className="p-4 text-red-600">No event details available.</div>;
+    return <div className="p-4 text-red-600">No event details available.</div>
+  }
+
+  const handleRegister = async () => {
+    if (!isLoggedIn) {
+      toast.error('Please log in first to register for the event.')
+      return
+    }
+
+    try {
+      await axiosInstance.post(`/api/event/register/${detail.id}/`)
+      toast.success('Successfully registered for the event!')
+    } catch (error) {
+      console.error(error)
+      toast.error('Failed to register. Please try again.')
+    }
   }
 
   return (
@@ -71,6 +91,7 @@ const EventDetail = () => {
 
           <div className="flex px-4 py-3 justify-start">
             <button
+              onClick={handleRegister}
               className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#141414] text-neutral-50 text-sm font-bold leading-normal tracking-[0.015em]"
             >
               <span className="truncate">Register Now</span>

@@ -38,12 +38,11 @@ const ResetForgotPassword = () => {
     setLoading(true);
     try {
       await axiospublic.post(`/api/user/reset-password/confirm/${uid}/${token}/`, {
-        password: formData.new_password, // note: key "password" per your Django view
+        password: formData.new_password, 
       });
 
       toast.success('Password reset successfully!');
       setFormData({ new_password: '', confirm_password: '' });
-      // Optionally redirect user here to login page
     } catch (err) {
       toast.error('Something went wrong. Please try again.');
       console.error(err);
