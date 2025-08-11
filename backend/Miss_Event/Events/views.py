@@ -162,3 +162,13 @@ class CancleRegistration(RetrieveAPIView):
 
         except EventRegistration.DoesNotExist:
             return Response({"detail": "Not registered for this event."}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+class UserEvent(ListAPIView):
+    serializer_class = EventSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return EventModel.objects.filter(user__id=user_id)
