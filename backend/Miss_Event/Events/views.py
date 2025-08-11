@@ -171,4 +171,4 @@ class UserEvent(ListAPIView):
     
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return EventModel.objects.filter(user__id=user_id)
+        return EventModel.objects.filter(eventregistration__user__id=user_id)
