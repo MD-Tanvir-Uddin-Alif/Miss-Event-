@@ -3,46 +3,72 @@ import React from 'react';
 const Home = () => {
   return (
     <div className="font-sans">
-      {/* Hero Section */}
-      <section className="bg-gray-50 py-12 px-6 text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          Discover and Join Amazing Events
-        </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Explore events from various organizations and register in seconds.
-        </p>
-        <img
-          src="/images/home.png"
-          alt="Event Illustration"
-          className="mt-8 max-w-lg mx-auto"
-        />
+      <section className="bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-800 py-16 px-6 shadow-lg">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+    
+          <div className="flex-1 flex justify-center">
+            <img
+              src="/images/home.png"
+              alt="Event Illustration"
+              className="max-w-md w-full"
+            />
+          </div>
+
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-5xl font-extrabold mb-4 animate-fadeIn">
+              Discover and Join Amazing Events
+            </h1>
+            <p className="text-lg text-gray-600 max-w-md mb-6 animate-fadeIn delay-200">
+              Explore events from various organizations and register in seconds.
+            </p>
+            <button className="px-6 py-3 bg-black text-white rounded-lg shadow">
+              Browse Events
+            </button>
+          </div>
+        </div>
       </section>
 
-      {/* Feature Cards */}
-      <section className="py-12 px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-        <div className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-lg transition">
-          <img src="/images/event-fotor-bg-removed.png" alt="Variety" className="w-16 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold">Variety of Events</h3>
-          <p className="text-gray-500 text-sm mt-2">Find events from concerts to workshops all in one place.</p>
-        </div>
 
-        <div className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-lg transition">
-          <img src="/images/registration-1.png" alt="Easy Registration" className="w-16 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold">Easy Registration</h3>
-          <p className="text-gray-500 text-sm mt-2">Sign up in seconds and secure your spot instantly.</p>
-        </div>
-
-        <div className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-lg transition">
-          <img src="/images/organization.png" alt="Verified Organizations" className="w-16 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold">Verified Organizations</h3>
-          <p className="text-gray-500 text-sm mt-2">Join events hosted by trusted and verified organizers.</p>
-        </div>
-
-        <div className="bg-white shadow-md rounded-xl p-6 text-center hover:shadow-lg transition">
-          <img src="/images/icons8-reminders-50.png" alt="Reminders" className="w-16 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold">Event Reminders</h3>
-          <p className="text-gray-500 text-sm mt-2">Never miss an event with timely notifications.</p>
-        </div>
+      <section className="py-16 px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto">
+        {[
+          {
+            img: "/images/event-fotor-bg-removed.png",
+            title: "Variety of Events",
+            text: "Find events from concerts to workshops all in one place.",
+            color: "from-pink-100 to-pink-50"
+          },
+          {
+            img: "/images/registration-1.png",
+            title: "Easy Registration",
+            text: "Sign up in seconds and secure your spot instantly.",
+            color: "from-blue-100 to-blue-50"
+          },
+          {
+            img: "/images/organization.png",
+            title: "Verified Organizations",
+            text: "Join events hosted by trusted and verified organizers.",
+            color: "from-green-100 to-green-50"
+          },
+          {
+            img: "/images/icons8-reminders-50.png",
+            title: "Event Reminders",
+            text: "Never miss an event with timely notifications.",
+            color: "from-yellow-100 to-yellow-50"
+          }
+        ].map((feature, idx) => (
+          <div
+            key={idx}
+            className={`bg-gradient-to-b ${feature.color} shadow-lg rounded-2xl p-8 text-center hover:scale-105 hover:shadow-2xl transition-transform duration-300`}
+          >
+            <img
+              src={feature.img}
+              alt={feature.title}
+              className="w-20 mx-auto mb-6 drop-shadow-lg"
+            />
+            <h3 className="text-xl font-bold text-gray-800">{feature.title}</h3>
+            <p className="text-gray-600 text-sm mt-3">{feature.text}</p>
+          </div>
+        ))}
       </section>
     </div>
   );
