@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosPublic.post('http://127.0.0.1:8000/api/user/login/', {
+      const response = await axiosPublic.post('/api/user/login/', {
         username: formData.username,
         password: formData.password
       });

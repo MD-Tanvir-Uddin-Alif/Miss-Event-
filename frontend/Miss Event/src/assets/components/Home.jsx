@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="font-sans">
-      <section className="bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-800 py-16 px-6 shadow-lg">
+      <section className="bg-gradient-to-b from-white via-gray-50 to-gray-100 text-gray-800 py-16 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
     
           <div className="flex-1 flex justify-center">
@@ -21,7 +23,7 @@ const Home = () => {
             <p className="text-lg text-gray-600 max-w-md mb-6 animate-fadeIn delay-200">
               Explore events from various organizations and register in seconds.
             </p>
-            <button className="px-6 py-3 bg-black text-white rounded-lg shadow">
+            <button onClick={()=>navigate('/events')} className="px-6 py-3 bg-black text-white rounded-lg shadow">
               Browse Events
             </button>
           </div>

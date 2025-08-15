@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axiosPublic from '../../utils/axiospublic';
 import {Camera, Shield, Zap, Headphones,Building, Megaphone} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -133,8 +134,8 @@ const Register = () => {
 
   try {
     const apiUrl = type === 'User'
-      ? 'http://127.0.0.1:8000/api/user/registration/'
-      : 'http://127.0.0.1:8000/api/organization/register/';
+      ? '/api/user/registration/'
+      : '/api/organization/register/';
 
     const submitData = new FormData();
 
@@ -142,7 +143,7 @@ const Register = () => {
       if (value) submitData.append(key, value);
     });
 
-    const response = await axios.post(apiUrl, submitData, {
+    const response = await axiosPublic.post(apiUrl, submitData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
