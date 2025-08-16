@@ -149,6 +149,8 @@ const Register = () => {
       },
     });
 
+    console.log(response);
+
     toast.success(`${type} registration successful! Please confirm your email to activate your account.`);
   } catch (error) {
     if (error.response?.data) {
