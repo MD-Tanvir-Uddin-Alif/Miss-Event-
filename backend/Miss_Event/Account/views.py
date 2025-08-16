@@ -1,5 +1,6 @@
 import uuid
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from .models import CustomUser
 from .utils import password_reset_token
 from rest_framework import status
@@ -53,7 +54,7 @@ class VerifyView(APIView):
             user.is_active = True
             user.email_verification_token = None
             user.save()
-            return Response({"message": "Email verified successfully. You can now log in."})
+            return HttpResponseRedirect("http://localhost:5173/#/activate-account")
         except:
             return Response({"error": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
 
