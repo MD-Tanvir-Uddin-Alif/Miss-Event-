@@ -36,6 +36,10 @@ ALLOWED_HOSTS = [
 ]
 
 
+SITE_DOMAIN = "https://miss-event.onrender.com"
+
+
+
 # Application definition
 
 INSTALLED_APPS = [

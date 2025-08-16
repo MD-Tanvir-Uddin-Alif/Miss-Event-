@@ -64,11 +64,8 @@ class CustomUserRegistrationView(CreateAPIView):
         user.is_active = False
         user.save()
 
-        verify_path = reverse('verify-email', kwargs={'token': token})  # Django URL name
-        verify_link = request.build_absolute_uri(verify_path)
-
-        if not settings.DEBUG:  # DEBUG = False in production
-            verify_link = verify_link.replace('127.0.0.1:8000', 'miss-event.onrender.com')
+        verify_path = reverse('verify-email', kwargs={'token': token})  # URL pattern name
+        verify_link = f"{settings.SITE_DOMAIN}{verify_path}"
 
         send_mail(
             subject="Verify your email",
