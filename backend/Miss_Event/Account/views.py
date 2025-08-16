@@ -48,7 +48,6 @@ from .serializers import CustomUserRegistrationSerializer, UserProfileSerializer
 #         )
 
 
-from django.urls import reverse
 
 class CustomUserRegistrationView(CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -65,11 +64,9 @@ class CustomUserRegistrationView(CreateAPIView):
         user.is_active = False
         user.save()
 
-        # Build absolute URL dynamically
         verify_path = reverse('verify-email', kwargs={'token': token})  # Django URL name
         verify_link = request.build_absolute_uri(verify_path)
 
-        # Optional: Replace local host with production domain in deployment
         if not settings.DEBUG:  # DEBUG = False in production
             verify_link = verify_link.replace('127.0.0.1:8000', 'miss-event.onrender.com')
 
