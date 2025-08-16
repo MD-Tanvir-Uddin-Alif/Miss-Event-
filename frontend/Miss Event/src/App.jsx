@@ -18,6 +18,7 @@ import PubllicEvent from './assets/components/PubllicEvent'
 import EventDetail from './assets/components/EventDetail'
 import EmailPass from './assets/components/EmailPass'
 import ResetForgotPassword from './assets/components/ResetForgotPassword'
+import RegistrationSucessFull from './assets/components/RegistrationSucessFull'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
+          <Route path='activete-account' element={<RegistrationSucessFull/>}></Route>
           <Route path='events' element={<PubllicEvent/>}></Route>
           <Route path='event/detail' element={<EventDetail/>}></Route>
           <Route path='register' element={<Register/>}></Route>
