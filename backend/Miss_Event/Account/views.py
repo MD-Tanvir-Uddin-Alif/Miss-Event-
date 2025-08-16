@@ -1,4 +1,5 @@
 import uuid
+from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import CustomUser
@@ -16,35 +17,76 @@ from .serializers import CustomUserRegistrationSerializer, UserProfileSerializer
 # Create your views here.
 
 
+# class CustomUserRegistrationView(CreateAPIView):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = CustomUserRegistrationSerializer
+#     permission_classes = [AllowAny]
+    
+#     def create(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.save()
+        
+#         token = str(uuid.uuid4())
+#         user.email_verification_token = token
+#         user.is_active = False
+#         user.save()
+        
+#         verify_link = f"http://miss-event.onrender.com/api/user/verify-email/{token}/"
+        
+#         send_mail(
+#             subject="Verify your email",
+#             message=f"Hello {user.username}, click here to verify: {verify_link}",
+#             from_email=settings.DEFAULT_FROM_EMAIL,
+#             recipient_list=[user.email],
+#             fail_silently=False,
+#         )
+        
+#         return Response(
+#             {"message": "Registration successful. Please check your email to verify your account."},
+#             status=status.HTTP_201_CREATED
+#         )
+
+
+from django.urls import reverse
+
 class CustomUserRegistrationView(CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserRegistrationSerializer
     permission_classes = [AllowAny]
-    
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        
+
         token = str(uuid.uuid4())
         user.email_verification_token = token
         user.is_active = False
         user.save()
-        
-        verify_link = f"http://miss-event.onrender.com/api/user/verify-email/{token}/"
-        
+
+        # Build absolute URL dynamically
+        verify_path = reverse('verify-email', kwargs={'token': token})  # Django URL name
+        verify_link = request.build_absolute_uri(verify_path)
+
+        # Optional: Replace local host with production domain in deployment
+        if not settings.DEBUG:  # DEBUG = False in production
+            verify_link = verify_link.replace('127.0.0.1:8000', 'miss-event.onrender.com')
+
         send_mail(
             subject="Verify your email",
-            message=f"Hello {user.username}, click here to verify: {verify_link}",
+            message=f"Hello {user.username}, click here to verify your account: {verify_link}",
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[user.email],
             fail_silently=False,
         )
-        
+
         return Response(
             {"message": "Registration successful. Please check your email to verify your account."},
             status=status.HTTP_201_CREATED
         )
+
+
 
 class VerifyView(APIView):
     permission_classes = [AllowAny]
