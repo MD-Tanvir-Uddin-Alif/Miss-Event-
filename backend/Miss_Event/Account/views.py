@@ -70,7 +70,7 @@ class CustomUserRegistrationView(CreateAPIView):
         verify_path = reverse('verify-email', kwargs={'token': token})  # URL pattern name
         verify_link = f"{settings.SITE_DOMAIN}{verify_path}"
 
-        send_async_email(
+        send_mail(
             subject="Verify your email",
             message=f"Hello {user.username}, click here to verify your account: {verify_link}",
             from_email=settings.DEFAULT_FROM_EMAIL,
