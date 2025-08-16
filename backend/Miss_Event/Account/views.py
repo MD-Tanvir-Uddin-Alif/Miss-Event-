@@ -30,7 +30,7 @@ class CustomUserRegistrationView(CreateAPIView):
         user.is_active = False
         user.save()
         
-        verify_link = f"http://127.0.0.1:8000/api/user/verify-email/{token}/"
+        verify_link = f"http://miss-event.onrender.com/api/user/verify-email/{token}/"
         
         send_mail(
             subject="Verify your email",
