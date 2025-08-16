@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axiosPublic from '../../utils/axiospublic';
 import {Camera, Shield, Zap, Headphones,Building, Megaphone} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { data, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -155,6 +155,7 @@ const Register = () => {
   } catch (error) {
     if (error.response?.data) {
       const messages = Object.values(error.response.data).flat();
+      console.log(error?.response.data);
       messages.forEach(msg => toast.error(msg));
     } else {
       toast.error("Something went wrong. Try again later.");
