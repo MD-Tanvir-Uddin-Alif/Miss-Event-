@@ -20,6 +20,46 @@ from Events.views import send_async_email
 # Create your views here.
 
 
+# class CustomUserRegistrationView(CreateAPIView):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = CustomUserRegistrationSerializer
+#     permission_classes = [AllowAny]
+    
+#     def create(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.save()
+        
+#         token = str(uuid.uuid4())
+#         user.email_verification_token = token
+#         user.is_active = False
+#         user.save()
+        
+#         verify_path = reverse('verify-email', kwargs={'token': token})  
+#         verify_link = f"{settings.SITE_DOMAIN}{verify_path}"
+#         # verify_link = f"http://127.0.0.1:8000//api/user/verify-email/{token}/"
+        
+#         try:
+#             send_mail(
+#                 subject="Verify your email",
+#                 message=f"Hello {user.username}, click here to verify your account: {verify_link}",
+#                 from_email=settings.DEFAULT_FROM_EMAIL,
+#                 recipient_list=[user.email],
+#                 fail_silently=False,  
+#             )
+#         except Exception as e:
+#             user.delete()
+#             return Response(
+#                 {"error": f"Registration failed. Could not send verification email: {e}"},
+#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+#             )
+        
+#         return Response(
+#             {"message": "Registration successful. Please check your email to verify your account."},
+#             status=status.HTTP_201_CREATED
+#         )
+
+
 class CustomUserRegistrationView(CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserRegistrationSerializer
@@ -35,9 +75,17 @@ class CustomUserRegistrationView(CreateAPIView):
         user.is_active = False
         user.save()
         
-        verify_path = reverse('verify-email', kwargs={'token': token})  
-        verify_link = f"{settings.SITE_DOMAIN}{verify_path}"
-        # verify_link = f"http://127.0.0.1:8000//api/user/verify-email/{token}/"
+        if request.META.get('HTTP_X_FORWARDED_PROTO') == 'https' or request.is_secure():
+            protocol = 'https'
+        else:
+            protocol = 'http'
+        
+        host = request.get_host()
+        verify_path = reverse('verify-email', kwargs={'token': token})
+        verify_link = f"{protocol}://{host}{verify_path}"
+        
+        if '127.0.0.1' in verify_link or 'localhost' in verify_link:
+            verify_link = f"https://miss-event.onrender.com{verify_path}"
         
         try:
             send_mail(
@@ -47,6 +95,10 @@ class CustomUserRegistrationView(CreateAPIView):
                 recipient_list=[user.email],
                 fail_silently=False,  
             )
+            
+            # For debugging - you can remove this later
+            print(f"Verification link generated: {verify_link}")
+            
         except Exception as e:
             user.delete()
             return Response(

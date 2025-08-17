@@ -36,7 +36,9 @@ ALLOWED_HOSTS = [
 ]
 
 
-SITE_DOMAIN = "https://miss-event.onrender.com"
+# SITE_DOMAIN = "https://miss-event.onrender.com"
+
+SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'https://miss-event.onrender.com')
 
 
 
