@@ -37,7 +37,7 @@ class CustomUserRegistrationView(CreateAPIView):
         
         verify_path = reverse('verify-email', kwargs={'token': token})  
         verify_link = f"{settings.SITE_DOMAIN}{verify_path}"
-        # verify_link = f"http://http://127.0.0.1:8000//api/user/verify-email/{token}/"
+        # verify_link = f"http://127.0.0.1:8000//api/user/verify-email/{token}/"
         
         try:
             send_mail(

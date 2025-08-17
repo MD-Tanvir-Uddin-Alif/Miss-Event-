@@ -5,7 +5,7 @@ const baseURL = 'https://miss-event.onrender.com';
 
 const axiosPublic = axios.create({
   baseURL,
-  timeout: 5000,
+  timeout: 15000,
   headers: {
     // 'Content-Type': 'application/json',
   },

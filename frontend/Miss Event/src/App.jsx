@@ -29,7 +29,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
-          <Route path='activete-account' element={<RegistrationSucessFull/>}></Route>
+          <Route path='activate-account' element={<RegistrationSucessFull/>}></Route>
           <Route path='events' element={<PubllicEvent/>}></Route>
           <Route path='event/detail' element={<EventDetail/>}></Route>
           <Route path='register' element={<Register/>}></Route>

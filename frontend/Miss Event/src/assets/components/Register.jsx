@@ -159,6 +159,7 @@ const Register = () => {
       messages.forEach(msg => toast.error(msg));
     } else {
       toast.error("Something went wrong. Try again later.");
+      // toast.success(`${type} registration successful! Please confirm your email to activate your account.`);
     }
   }
 };
