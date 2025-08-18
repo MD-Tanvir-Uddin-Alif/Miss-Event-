@@ -124,7 +124,7 @@ class VerifyView(APIView):
             user.is_active = True
             user.email_verification_token = None
             user.save()
-            return HttpResponseRedirect("http://localhost:5173/#/activate-account")
+            return HttpResponseRedirect("http://miss-event.vercel.app/#/activate-account")
         except:
             return Response({"error": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
 

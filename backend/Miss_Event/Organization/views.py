@@ -30,6 +30,7 @@ class OrganizationRegisterView(CreateAPIView):
         user.email_verification_token = token
         user.save(update_fields=["email_verification_token"])
 
+        # verify_link = f"http://127.0.0.1:8000/api/user/verify-email/{token}/"
         verify_link = f"http://127.0.0.1:8000/api/user/verify-email/{token}/"
         send_mail(
             subject="Verify your email",
