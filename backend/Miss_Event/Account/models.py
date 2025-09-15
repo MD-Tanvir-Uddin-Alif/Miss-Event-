@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
@@ -7,7 +8,8 @@ class CustomUser(AbstractUser):
     is_organizer = models.BooleanField(default=False)
     email_verification_token = models.CharField(max_length=125, blank=True, null=True)
     phone = models.CharField(max_length=11, blank=True)
-    image = models.ImageField(upload_to="avatars/" ,blank=True, null=True)
+    # image = models.ImageField(upload_to="avatars/" ,blank=True, null=True)
+    image = CloudinaryField('image', folder='avatars', blank=True, null=True)
     address = models.TextField()
     account_created_at = models.DateTimeField(auto_now_add=True)
     

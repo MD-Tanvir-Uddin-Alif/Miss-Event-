@@ -10,12 +10,14 @@ cachetools==5.5.2
 certifi==2025.4.26
 charset-normalizer==3.4.2
 click==8.2.1
+cloudinary==1.44.1
 colorama==0.4.6
 crispy-tailwind==1.0.3
 dataclasses-json==0.6.7
 dj-database-url==3.0.1
 Django==5.1.7
 django-appconf==1.1.0
+django-cloudinary-storage==0.3.0
 django-compressor==4.5.1
 django-cors-headers==4.7.0
 django-crispy-forms==2.3
