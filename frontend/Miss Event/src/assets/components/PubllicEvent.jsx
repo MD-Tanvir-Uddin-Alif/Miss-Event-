@@ -90,7 +90,7 @@ const PubllicEvent = () => {
                 {event.banner_url ? (
                   <div
                     className="w-full md:w-64 aspect-video bg-center bg-cover bg-no-repeat rounded-md"
-                    style={{ backgroundImage: `url(${event.banner})` }}
+                    style={{ backgroundImage: `url(${event.banner_url})` }}
                   />
                 ) : (
                   <div className="w-full md:w-64 aspect-video bg-gray-100 flex items-center justify-center rounded-md text-sm text-gray-500">

@@ -37,10 +37,17 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = CustomUser
-        fields = ['id','first_name', 'last_name', 'username', 'email', 'phone', 'image','is_organizer']
+        fields = ['id','first_name', 'last_name', 'username', 'email', 'phone', 'image_url','is_organizer']
         read_only_fields = ['id', 'username']
+    
+    def get_image_url(self, obj):
+        if obj.image:
+            return obj.image.url 
+        return None
 
 
 class ChangePasswordSeriliazer(serializers.Serializer):

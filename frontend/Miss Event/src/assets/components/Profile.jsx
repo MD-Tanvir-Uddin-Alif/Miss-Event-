@@ -109,7 +109,7 @@ const Profile = () => {
         <div className="mb-6 flex justify-center">
           <img
             className="h-32 w-32 rounded-xl border border-gray-400 object-cover"
-            src={organization.logo || 'https://placehold.co/300x300?text=Logo'}
+            src={organization.logo_url || 'https://placehold.co/300x300?text=Logo'}
             alt="Organization Logo"
           />
         </div>
@@ -185,7 +185,7 @@ const Profile = () => {
         <div className="flex items-center space-x-6 mb-8">
           <img
             className="h-24 w-24 rounded-full object-cover border-4 border-black"
-            src={profile.image || 'https://i.pravatar.cc/150?img=5'}
+            src={profile.image_url || 'https://i.pravatar.cc/150?img=5'}
             alt="User Profile"
           />
           <div>
