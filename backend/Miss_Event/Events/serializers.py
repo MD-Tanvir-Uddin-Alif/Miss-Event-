@@ -4,15 +4,22 @@ from .models import EventModel, EventRegistration
 
 class EventSerializer(serializers.ModelSerializer):
     organization_name = serializers.ReadOnlyField(source="organization.organization")
+    banner_url = serializers.SerializerMethodField()
+
 
     class Meta:
         model = EventModel
         fields = [
             "id", "organization", "organization_name",
             "title", "description", "start_time", "end_time",
-            "location", "banner" ,"capacity", "created_at", "updated_at"
+            "location", "banner_url" ,"capacity", "created_at", "updated_at"
         ]
         read_only_fields = ["organization", "organization_name", "created_at", "updated_at"]
+    
+    def get_banner_url(self, obj):
+        if obj.banner:
+            return obj.banner.url
+        return None
 
 
 class EventRegistrationSerializer(serializers.ModelSerializer):

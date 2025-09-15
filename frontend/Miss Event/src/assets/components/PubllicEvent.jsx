@@ -87,7 +87,7 @@ const PubllicEvent = () => {
                   </button>
                 </div>
 
-                {event.banner ? (
+                {event.banner_url ? (
                   <div
                     className="w-full md:w-64 aspect-video bg-center bg-cover bg-no-repeat rounded-md"
                     style={{ backgroundImage: `url(${event.banner})` }}
