@@ -17,9 +17,7 @@ class EventSerializer(serializers.ModelSerializer):
         read_only_fields = ["organization", "organization_name", "created_at", "updated_at"]
     
     def get_banner_url(self, obj):
-        if obj.banner:
-            return obj.banner.url
-        return None
+        return obj.banner.url if obj.banner else None
 
 
 class EventRegistrationSerializer(serializers.ModelSerializer):

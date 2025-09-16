@@ -70,15 +70,4 @@ class OrganizationDetailsSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
     
     def get_logo_url(self, obj):
-        if obj.logo:
-            try:
-                url, _ = cloudinary_url(
-                    obj.logo.public_id,
-                    secure=True,
-                    fetch_format="auto",
-                    quality="auto"
-                )
-                return url
-            except:
-                return obj.logo.url
-        return None
+        return obj.logo.url if obj.logo else None

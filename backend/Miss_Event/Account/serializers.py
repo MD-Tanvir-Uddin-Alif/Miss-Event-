@@ -46,15 +46,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'username']
     
     def get_image_url(self, obj):
-        if obj.image:
-            url, _ = cloudinary_url(
-                obj.image.public_id,
-                secure=True,
-                fetch_format="auto",  
-                quality="auto"
-        )
-            return url 
-        return None
+        return obj.image.url if obj.image else None
 
 
 class ChangePasswordSeriliazer(serializers.Serializer):
