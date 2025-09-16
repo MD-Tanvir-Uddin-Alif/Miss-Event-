@@ -78,7 +78,7 @@ const GetEvent = () => {
             {event.banner && (
               <div className="w-full h-32 overflow-hidden">
                 <img
-                  src={event.banner}
+                  src={event.banner_url}
                   alt={`${event.title} banner`}
                   className="w-full h-full object-cover object-center"
                   onError={(e) => {
