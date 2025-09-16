@@ -1,7 +1,9 @@
 from rest_framework import serializers
+from cloudinary.utils import cloudinary_url
 from .models import OrganizationModel
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
+import base64
 
 User = get_user_model()
 
@@ -69,5 +71,14 @@ class OrganizationDetailsSerializer(serializers.ModelSerializer):
     
     def get_logo_url(self, obj):
         if obj.logo:
-            return obj.logo.url 
+            try:
+                url, _ = cloudinary_url(
+                    obj.logo.public_id,
+                    secure=True,
+                    fetch_format="auto",
+                    quality="auto"
+                )
+                return url
+            except:
+                return obj.logo.url
         return None

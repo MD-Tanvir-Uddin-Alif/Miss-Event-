@@ -11,6 +11,8 @@ from rest_framework.generics import (
 from .serializers import EventSerializer, EventRegistrationSerializer
 from .models import EventModel, EventRegistration
 from .permissions import IsOrganizerAndOwner
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+
 
 from Utils.email_send_util import send_event_email
 # Create your views here.
@@ -25,6 +27,8 @@ class OrganizerEventCreateView(CreateAPIView):
     queryset = EventModel.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsOrganizerAndOwner]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def perform_create(self, serializer):
         serializer.save(organization=self.request.user.organizationmodel)
@@ -35,6 +39,8 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
     queryset = EventModel.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsOrganizerAndOwner]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def perform_update(self, serializer):
         event = self.get_object()
@@ -78,6 +84,8 @@ class OrganizerEventDetailView(RetrieveUpdateDestroyAPIView):
 class OrganizationEventsView(ListAPIView):
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def get_queryset(self):
         org_id = self.kwargs['org_id']

@@ -15,6 +15,7 @@ const Profile = () => {
       try {
         const res = await axiosInstance.get('/api/user/profile/');
         setProfile(res.data);
+        console.log(res.data);
 
         if (res.data.is_organizer) {
           fetchOrganizationDetails();

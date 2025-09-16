@@ -10,6 +10,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.core.mail import send_mail
 from Account.models import CustomUser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 # Create your views here.
 
@@ -17,6 +18,8 @@ class OrganizationRegisterView(CreateAPIView):
     queryset = OrganizationModel.objects.all()
     serializer_class = OrganizationRegistrationSerializer
     permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
@@ -54,6 +57,8 @@ class OrganizerDetailsView(RetrieveAPIView):
     queryset = OrganizationModel.objects.all()
     serializer_class = OrganizationDetailsSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def get_object(self):
         return self.request.user.organizationmodel
@@ -63,6 +68,7 @@ class OrganizationDetailUpdateView(RetrieveUpdateAPIView):
     queryset = OrganizationModel
     serializer_class = OrganizationDetailsSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
     
     def get_object(self):
         return self.request.user.organizationmodel

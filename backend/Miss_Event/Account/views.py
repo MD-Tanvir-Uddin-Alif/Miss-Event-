@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from .serializers import CustomUserRegistrationSerializer, UserProfileSerializer, ChangePasswordSeriliazer
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
 from Events.views import send_async_email
@@ -64,6 +65,8 @@ class CustomUserRegistrationView(CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserRegistrationSerializer
     permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -146,6 +149,8 @@ class UpdateProfileView(RetrieveUpdateAPIView):
     queryset = CustomUser
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def get_object(self):
         return self.request.user
@@ -233,6 +238,8 @@ class UserProfileView(RetrieveAPIView):
     queryset = CustomUser
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
     
     def get_object(self):
         return self.request.user

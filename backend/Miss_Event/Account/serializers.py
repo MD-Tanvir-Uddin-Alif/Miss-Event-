@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser
+from cloudinary.utils import cloudinary_url
 from django.contrib.auth.password_validation import validate_password
 
 
@@ -46,7 +47,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     def get_image_url(self, obj):
         if obj.image:
-            return obj.image.url 
+            url, _ = cloudinary_url(
+                obj.image.public_id,
+                secure=True,
+                fetch_format="auto",  
+                quality="auto"
+        )
+            return url 
         return None
 
 
