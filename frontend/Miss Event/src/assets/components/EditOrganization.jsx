@@ -22,7 +22,7 @@ const EditOrganization = () => {
 
   const [logo, setLogo] = useState(null);
   const [preview, setPreview] = useState(() => 
-    info?.logo || 'https://placehold.co/300x300?text=Logo'
+    info?.logo_url || 'https://placehold.co/300x300?text=Logo'
   );
 
   const handleChange = (e) => {
