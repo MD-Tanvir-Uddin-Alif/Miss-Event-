@@ -75,7 +75,7 @@ const Navbar = () => {
     if (!userProfile) return 'https://via.placeholder.com/60';
     
     if (userProfile.is_organizer && userProfile.organization?.logo) {
-      return userProfile.organization.logo;
+      return userProfile.organization.logo_url;
     }
     
     return userProfile.image || 'https://i.pravatar.cc/150?img=5';

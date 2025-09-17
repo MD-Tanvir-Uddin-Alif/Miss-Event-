@@ -66,7 +66,7 @@ class OrganizationDetailsSerializer(serializers.ModelSerializer):
     logo_url = serializers.SerializerMethodField()
     class Meta:
         model = OrganizationModel
-        fields = ['id', 'organizer','organization', 'address1', 'address2', 'phone', 'link', 'email', 'description', 'logo_url',]
+        fields = ['id', 'organizer','organization', 'address1', 'address2', 'phone', 'link', 'email', 'description', 'logo_url','logo']
         read_only_fields = ['id']
     
     def get_logo_url(self, obj):

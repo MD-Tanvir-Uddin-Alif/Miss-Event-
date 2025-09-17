@@ -20,7 +20,7 @@ const EditProfile = () => {
 
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(() => 
-    info?.image || 'https://i.pravatar.cc/150?img=5'
+    info?.image_url || 'https://i.pravatar.cc/150?img=5'
   );
 
   // Handle input changes - FIXED: Simplified
